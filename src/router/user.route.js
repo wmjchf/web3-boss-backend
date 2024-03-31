@@ -4,13 +4,16 @@ const {
   verifyUser,
   crpyt,
 } = require("../middleware/user.middleware");
-const { register, login } = require("../controller/user.controll");
+const { auth } = require("../middleware/auth.middleware");
+const { register, login, getNonce } = require("../controller/user.controll");
 const router = new Router({
   prefix: "/user",
 });
 
-router.post("/register", userValidator, verifyUser, crpyt, register);
+router.get("/nonce", getNonce);
 
-router.post("/login", login);
+// router.post("/register", userValidator, verifyUser, crpyt, register);
+
+router.post("/login", userValidator, verifyUser, login);
 
 module.exports = router;

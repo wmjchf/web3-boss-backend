@@ -1,13 +1,10 @@
 const bcrypt = require("bcryptjs");
+const { SiweMessage } = require("siwe");
 const { getUserInfo } = require("../service/user.service");
-const {
-  userAlreadyExited,
-  userFormateError,
-  userRegisterError,
-} = require("../constant/error.type");
+const { userFormateError, userVerifyError } = require("../constant/error.type");
 const userValidator = async (ctx, next) => {
-  const { username, password } = ctx.request.body;
-  if (!username || !password) {
+  const { message, signature } = ctx.request.body;
+  if (!message || !signature) {
     ctx.app.emit("error", userFormateError, ctx);
     return;
   }
@@ -15,15 +12,17 @@ const userValidator = async (ctx, next) => {
 };
 
 const verifyUser = async (ctx, next) => {
-  const { username } = ctx.request.body;
+  const { message, signature } = ctx.request.body;
+  const { nonce } = ctx;
   try {
-    const result = await getUserInfo({ username });
-    if (result) {
-      ctx.app.emit("error", userAlreadyExited, ctx);
-      return;
-    }
+    const SIWEObject = new SiweMessage(message);
+    const { data } = await SIWEObject.verify({
+      signature,
+      nonce,
+    });
+    ctx.siwe = data;
   } catch (error) {
-    ctx.app.emit("error", userRegisterError, ctx);
+    ctx.app.emit("error", userVerifyError, ctx);
     return;
   }
 

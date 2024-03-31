@@ -1,21 +1,21 @@
 const User = require("../model/user.model");
 class UserService {
-  async createUser(username, password) {
+  async createUser(address, chainId) {
     const result = await User.create({
-      username,
-      password,
+      address,
+      chainId,
     });
     return result.dataValues;
   }
-  async getUserInfo({ id, username, is_admin }) {
+  async getUserInfo({ id, address, chainId }) {
     const whereOpt = {};
 
     id && Object.assign(whereOpt, { id });
-    username && Object.assign(whereOpt, { username });
-    is_admin && Object.assign(whereOpt, { is_admin });
+    address && Object.assign(whereOpt, { address });
+    chainId && Object.assign(whereOpt, { chainId });
 
     const result = await User.findOne({
-      attributes: ["id", "username", "is_admin"],
+      attributes: ["id", "address", "chainId"],
       where: whereOpt,
     });
     return result ? result.dataValues : null;

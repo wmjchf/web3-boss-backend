@@ -3,22 +3,22 @@ const { DataTypes } = require("sequelize");
 const seq = require("../db/seq");
 
 const User = seq.define("user", {
-  username: {
+  address: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
-    comment: "用户名，唯一",
+    comment: "链上地址，唯一",
   },
-  password: {
-    type: DataTypes.CHAR(64),
+  chainId: {
+    type: DataTypes.INTEGER,
     allowNull: false,
-    comment: "密码",
+    comment: "链id",
   },
-  is_admin: {
-    type: DataTypes.BOOLEAN,
+  integral: {
+    type: DataTypes.INTEGER,
     allowNull: false,
-    defaultValue: 0,
-    comment: "是否为管理员",
+    defaultValue: 100,
+    comment: "积分",
   },
 });
 

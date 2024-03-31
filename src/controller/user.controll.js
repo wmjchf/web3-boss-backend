@@ -1,5 +1,8 @@
+const { generateNonce } = require("siwe");
+const jwt = require("jsonwebtoken");
 const { createUser, getUserInfo } = require("../service/user.service");
-const { userRegisterError } = require("../constant/error.type");
+const { userLoginError, userNonceError } = require("../constant/error.type");
+const { JWT_SECRET } = require("../config/config.default");
 class UserControll {
   async register(ctx, next) {
     const { username, password } = ctx.request.body;
@@ -21,7 +24,45 @@ class UserControll {
     }
   }
   async login(ctx, next) {
-    ctx.body = "用户登录城市";
+    const { siwe } = ctx;
+    const { address, chainId } = siwe;
+    let result = await getUserInfo({ address });
+    try {
+      if (!result) {
+        result = await createUser(address, chainId);
+      }
+      ctx.body = {
+        code: 0,
+        message: "登录成功",
+        result: {
+          token: jwt.sign(
+            { address: result.address, chainId: result.chainId },
+            JWT_SECRET,
+            {
+              expiresIn: "1d",
+            }
+          ),
+        },
+      };
+    } catch (error) {
+      ctx.app.emit("error", userLoginError, ctx);
+    }
+  }
+
+  async getNonce(ctx, next) {
+    try {
+      const nonce = generateNonce();
+      ctx.nonce = nonce;
+      ctx.body = {
+        status: 0,
+        message: "获取nonce成功",
+        result: {
+          nonce,
+        },
+      };
+    } catch (error) {
+      ctx.app.emit("error", userNonceError, ctx);
+    }
   }
 }
 
