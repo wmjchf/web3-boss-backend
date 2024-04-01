@@ -15,7 +15,7 @@ const Company = seq.define("company", {
     comment: "logo图片",
   },
   description: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT("long"),
     allowNull: false,
     comment: "描述",
   },
@@ -24,9 +24,14 @@ const Company = seq.define("company", {
     allowNull: false,
     comment: "项目/团队/公司所属账号",
   },
+  location: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    comment: "办公地址",
+  },
 });
 
-// User.sync({
+// Company.sync({
 //   force: true,
 // });
 
