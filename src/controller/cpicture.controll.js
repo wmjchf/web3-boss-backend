@@ -39,9 +39,9 @@ class CPictureController {
   }
   async adds(ctx, next) {
     const { pictures } = ctx.request.body;
-
+    const { companyId } = ctx.request.params;
     try {
-      const result = await createPictures(pictures);
+      const result = await createPictures(companyId, pictures);
 
       ctx.body = {
         status: 0,

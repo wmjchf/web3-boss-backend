@@ -12,6 +12,6 @@ const router = new Router({
 
 router.get("/", get);
 
-router.post("/", auth, adds);
+router.post("/:companyId", auth, adds);
 
 module.exports = router;

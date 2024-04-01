@@ -7,8 +7,26 @@ class CPictureService {
     });
     return result.dataValues;
   }
-  async createPictures(data) {
-    const result = await CPicture.bulkCreate(data);
+  async createPictures(companyId, data) {
+    const list = await CPicture.findAll({
+      attributes: ["url", "id"],
+      where: { companyId },
+    });
+
+    const noExist = list.filter((item) => {
+      return !data.includes(item.id);
+    });
+    const newList = data.filter((item) => {
+      return !list.includes(item.id);
+    });
+    const deleteResult = await CPicture.destroy({
+      where: {
+        id: noExist.map((item) => item.id),
+      },
+    });
+
+    const result = await CPicture.bulkCreate(newList);
+
     return result.map((item) => {
       return item.dataValues;
     });
