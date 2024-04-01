@@ -2,6 +2,7 @@ const {
   getCompanyList,
   createCompany,
   getCompanyInfo,
+  updateCompanyById,
 } = require("../service/company.service");
 const { addCompanyError } = require("../constant/company.error.type");
 class CompanyController {
@@ -18,9 +19,7 @@ class CompanyController {
       ctx.body = {
         status: 0,
         message: "获取成功",
-        result: {
-          data: result,
-        },
+        result,
       };
     } catch (error) {}
   }
@@ -55,11 +54,23 @@ class CompanyController {
   async getById(ctx, next) {
     const { id } = ctx.request.params;
     try {
-      const res = await getCompanyInfo(id);
+      const result = await getCompanyInfo(id);
       ctx.body = {
         status: 0,
         message: "获取成功",
-        data: res,
+        result,
+      };
+    } catch (error) {}
+  }
+
+  async update(ctx, next) {
+    const { id } = ctx.request.params;
+    try {
+      const result = await updateCompanyById(id, ctx.request.body);
+      ctx.body = {
+        status: 0,
+        message: "修改成功",
+        result,
       };
     } catch (error) {}
   }

@@ -43,6 +43,12 @@ class CompanyService {
     });
     return result ? result.dataValues : null;
   }
+  async updateCompanyById(id, data) {
+    const result = await Company.update(data, {
+      where: { id },
+    });
+    return result[0] > 0 ? true : false;
+  }
   //   async getUserInfo({ id, address, chainId }) {
   //     const whereOpt = {};
 

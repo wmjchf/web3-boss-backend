@@ -9,4 +9,9 @@ module.exports = {
     message: "添加项目/团队/公司错误",
     result: "",
   },
+  updateCompanyError: {
+    code: "20003",
+    message: "没有权限修改",
+    result: "",
+  },
 };
