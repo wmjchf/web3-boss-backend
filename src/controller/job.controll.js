@@ -5,6 +5,8 @@ const {
   updateJobById,
 } = require("../service/job.service");
 
+const { getCompanyInfo } = require("../service/company.service");
+
 class JobController {
   async get(ctx, next) {
     const {
@@ -41,6 +43,8 @@ class JobController {
       tag,
       minSalary,
       maxSalary,
+      isFace,
+      location,
     } = ctx.request.body;
     try {
       const res = await createJob({
@@ -51,6 +55,8 @@ class JobController {
         tag,
         minSalary,
         maxSalary,
+        isFace,
+        location,
       });
       ctx.body = {
         status: 0,
@@ -71,10 +77,15 @@ class JobController {
     const { id } = ctx.request.params;
     try {
       const result = await getJobInfo(id);
+
+      const companyResult = await getCompanyInfo(result.companyId);
       ctx.body = {
         status: 0,
         message: "获取成功",
-        result,
+        result: {
+          ...result,
+          address: companyResult.address,
+        },
       };
     } catch (error) {}
   }

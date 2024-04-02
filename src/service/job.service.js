@@ -8,17 +8,25 @@ class JobService {
     tag,
     minSalary,
     maxSalary,
+    isFace,
+    location,
   }) {
-    const result = await Job.create({
-      name,
-      isRemote,
-      description,
-      companyId,
-      minSalary,
-      maxSalary,
-      tag,
-    });
-    return result.dataValues;
+    try {
+      const result = await Job.create({
+        name,
+        isRemote,
+        description,
+        companyId,
+        minSalary,
+        maxSalary,
+        isFace,
+        location,
+        tag,
+      });
+      return result.dataValues;
+    } catch (error) {
+      console.log(error, "fds");
+    }
   }
 
   async getJobList({ name, isRemote, companyId, pageNum, pageSize }) {
@@ -39,6 +47,8 @@ class JobService {
         "companyId",
         "maxSalary",
         "minSalary",
+        "isFace",
+        "location",
         "tag",
         "description",
         "updatedAt",
@@ -64,6 +74,8 @@ class JobService {
         "minSalary",
         "tag",
         "description",
+        "isFace",
+        "location",
       ],
       where: {
         id,

@@ -6,7 +6,6 @@ const Job = seq.define("job", {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
     comment: "岗位名称",
   },
   isRemote: {
@@ -14,14 +13,21 @@ const Job = seq.define("job", {
     allowNull: false,
     comment: "是否支持远程",
   },
+  location: {
+    type: DataTypes.STRING,
+    comment: "工作地址（一般和公司地址一样）",
+  },
+  isFace: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    comment: "是否面议",
+  },
   minSalary: {
     type: DataTypes.STRING,
-    allowNull: false,
     comment: "最低工资",
   },
   maxSalary: {
     type: DataTypes.STRING,
-    allowNull: false,
     comment: "最高工资",
   },
   tag: {

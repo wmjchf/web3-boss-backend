@@ -17,7 +17,9 @@ class CPictureController {
         message: "获取成功",
         result,
       };
-    } catch (error) {}
+    } catch (error) {
+      console.log(error, "fs");
+    }
   }
 
   async add(ctx, next) {
