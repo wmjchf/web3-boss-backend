@@ -1,18 +1,24 @@
 const {
-  getCompanyList,
-  createCompany,
-  getCompanyInfo,
-  updateCompanyById,
-} = require("../service/company.service");
-const { addCompanyError } = require("../constant/company.error.type");
-class CompanyController {
+  getJobList,
+  createJob,
+  getJobInfo,
+  updateJobById,
+} = require("../service/job.service");
+
+class JobController {
   async get(ctx, next) {
-    const { address, id, name, pageNum = 1, pageSize = 10 } = ctx.request.query;
+    const {
+      name,
+      isRemote,
+      companyId,
+      pageNum = 1,
+      pageSize = 10,
+    } = ctx.request.query;
 
     try {
-      const result = await getCompanyList({
-        address,
-        id,
+      const result = await getJobList({
+        isRemote,
+        companyId,
         name,
         pageNum,
         pageSize,
@@ -27,14 +33,24 @@ class CompanyController {
   }
 
   async add(ctx, next) {
-    const { name, logo, description, location } = ctx.request.body;
+    const {
+      name,
+      isRemote,
+      description,
+      companyId,
+      tag,
+      minSalary,
+      maxSalary,
+    } = ctx.request.body;
     try {
-      const res = await createCompany({
+      const res = await createJob({
         name,
-        logo,
+        isRemote,
         description,
-        location,
-        address: ctx.state.user.address,
+        companyId,
+        tag,
+        minSalary,
+        maxSalary,
       });
       ctx.body = {
         status: 0,
@@ -48,15 +64,13 @@ class CompanyController {
           address: res.address,
         },
       };
-    } catch (error) {
-      ctx.app.emit("error", addCompanyError, ctx);
-    }
+    } catch (error) {}
   }
 
   async getById(ctx, next) {
     const { id } = ctx.request.params;
     try {
-      const result = await getCompanyInfo(id);
+      const result = await getJobInfo(id);
       ctx.body = {
         status: 0,
         message: "获取成功",
@@ -68,7 +82,7 @@ class CompanyController {
   async update(ctx, next) {
     const { id } = ctx.request.params;
     try {
-      const result = await updateCompanyById(id, ctx.request.body);
+      const result = await updateJobById(id, ctx.request.body);
       ctx.body = {
         status: 0,
         message: "修改成功",
@@ -78,4 +92,4 @@ class CompanyController {
   }
 }
 
-module.exports = new CompanyController();
+module.exports = new JobController();

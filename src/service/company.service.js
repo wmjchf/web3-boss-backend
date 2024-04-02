@@ -17,7 +17,6 @@ class CompanyService {
     address && Object.assign(whereOpt, { address });
     name && Object.assign(whereOpt, { name });
     id && Object.assign(whereOpt, { id });
-
     const offset = (pageNum - 1) * pageSize;
 
     const { count, rows } = await Company.findAndCountAll({

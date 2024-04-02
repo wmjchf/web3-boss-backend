@@ -20,6 +20,13 @@ class UserService {
     });
     return result ? result.dataValues : null;
   }
+  async getSelfInfo({ id }) {
+    const result = await User.findOne({
+      attributes: ["id", "address", "chainId", "integral"],
+      where: { id },
+    });
+    return result ? result.dataValues : null;
+  }
 }
 
 module.exports = new UserService();

@@ -1,6 +1,10 @@
 const { generateNonce } = require("siwe");
 const jwt = require("jsonwebtoken");
-const { createUser, getUserInfo } = require("../service/user.service");
+const {
+  createUser,
+  getUserInfo,
+  getSelfInfo,
+} = require("../service/user.service");
 const { userLoginError, userNonceError } = require("../constant/error.type");
 const { JWT_SECRET } = require("../config/config.default");
 class UserControll {
@@ -36,7 +40,7 @@ class UserControll {
         message: "登录成功",
         result: {
           token: jwt.sign(
-            { address: result.address, chainId: result.chainId },
+            { address: result.address, chainId: result.chainId, id: result.id },
             JWT_SECRET,
             {
               expiresIn: "1d",
@@ -63,6 +67,18 @@ class UserControll {
     } catch (error) {
       ctx.app.emit("error", userNonceError, ctx);
     }
+  }
+
+  async getSelf(ctx, next) {
+    const { id } = ctx.state.user;
+    try {
+      const result = await getSelfInfo({ id });
+      ctx.body = {
+        status: 0,
+        message: "获取成功",
+        result,
+      };
+    } catch (error) {}
   }
 }
 

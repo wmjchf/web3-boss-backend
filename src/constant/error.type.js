@@ -26,7 +26,7 @@ module.exports = {
   },
   invalidToken: {
     code: "10102",
-    message: "无效的token",
+    message: "需要重新登录",
     result: "",
   },
   fileUploadError: {
