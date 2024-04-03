@@ -1,6 +1,6 @@
 const path = require("path");
 const Koa = require("koa");
-// const KoaStatic = require("koa-static");
+const KoaStatic = require("koa-static");
 const { koaBody } = require("koa-body");
 const cors = require("koa2-cors");
 const parameter = require("koa-parameter");
@@ -17,7 +17,7 @@ app.use(
   })
 );
 
-// app.use(KoaStatic(path.join(__dirname, "../upload")));
+app.use(KoaStatic(path.join(__dirname, "../upload")));
 
 app.use(parameter(app));
 app.use(

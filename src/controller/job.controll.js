@@ -101,6 +101,17 @@ class JobController {
       };
     } catch (error) {}
   }
+  async delete(ctx, next) {
+    const { id } = ctx.request.params;
+    try {
+      const result = await updateJobById(id, { isDelete: true });
+      ctx.body = {
+        status: 0,
+        message: "删除成功",
+        result,
+      };
+    } catch (error) {}
+  }
 }
 
 module.exports = new JobController();

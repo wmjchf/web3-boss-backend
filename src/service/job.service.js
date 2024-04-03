@@ -29,12 +29,20 @@ class JobService {
     }
   }
 
-  async getJobList({ name, isRemote, companyId, pageNum, pageSize }) {
+  async getJobList({
+    name,
+    isRemote,
+    companyId,
+    pageNum,
+    pageSize,
+    isDelete = false,
+  }) {
     const whereOpt = {};
 
     isRemote && Object.assign(whereOpt, { isRemote });
     name && Object.assign(whereOpt, { name });
     companyId && Object.assign(whereOpt, { companyId });
+    Object.assign(whereOpt, { isDelete });
     const offset = (pageNum - 1) * pageSize;
 
     const { count, rows } = await Job.findAndCountAll({

@@ -12,10 +12,12 @@ class CApplyService {
     return result.dataValues;
   }
 
-  async getApplyList({ jobId, pageNum, pageSize }) {
+  async getApplyList({ jobId, pageNum, pageSize, haveRead, mark }) {
     const whereOpt = {};
 
     jobId && Object.assign(whereOpt, { jobId });
+    haveRead && Object.assign(whereOpt, { haveRead });
+    mark && Object.assign(whereOpt, { mark });
 
     const offset = (pageNum - 1) * pageSize;
 
@@ -29,6 +31,9 @@ class CApplyService {
         "uid",
         "resumeId",
         "haveRead",
+        "mark",
+        "updatedAt",
+        "id",
       ],
       where: whereOpt,
     });
@@ -56,6 +61,13 @@ class CApplyService {
       });
       return result ? result.dataValues : null;
     } catch (error) {}
+  }
+
+  async updateApplyById(id, data) {
+    const result = await Apply.update(data, {
+      where: { id },
+    });
+    return result[0] > 0 ? true : false;
   }
 }
 

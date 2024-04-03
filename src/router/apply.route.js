@@ -2,7 +2,12 @@ const Router = require("koa-router");
 
 const { auth } = require("../middleware/auth.middleware");
 
-const { get, add, getApplyByUid } = require("../controller/apply.controll");
+const {
+  get,
+  add,
+  getApplyByUid,
+  update,
+} = require("../controller/apply.controll");
 
 const router = new Router({
   prefix: "/apply",
@@ -13,6 +18,8 @@ const router = new Router({
 router.get("/list", auth, get);
 
 router.post("/", auth, add);
+
+router.put("/:id", auth, update);
 
 router.get("/", auth, getApplyByUid);
 

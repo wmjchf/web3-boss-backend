@@ -2,7 +2,13 @@ const Router = require("koa-router");
 
 const { auth } = require("../middleware/auth.middleware");
 const { verifyCompanyId } = require("../middleware/job.middleware");
-const { get, add, getById, update } = require("../controller/job.controll");
+const {
+  get,
+  add,
+  getById,
+  update,
+  delete: deleteId,
+} = require("../controller/job.controll");
 const router = new Router({
   prefix: "/job",
 });
@@ -14,5 +20,7 @@ router.post("/", auth, verifyCompanyId, add);
 router.get("/:id", getById);
 
 router.put("/:id", auth, verifyCompanyId, update);
+
+router.post("/delete/:id", auth, verifyCompanyId, deleteId);
 
 module.exports = router;

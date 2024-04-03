@@ -45,6 +45,12 @@ const Job = seq.define("job", {
     allowNull: false,
     comment: "项目/团队/公司id",
   },
+  isDelete: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    comment: "是否删除",
+    defaultValue: false,
+  },
 });
 
 // Job.sync({

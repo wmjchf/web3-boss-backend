@@ -34,6 +34,12 @@ const Apply = seq.define("apply", {
     comment: "简历是否已被读",
     defaultValue: false,
   },
+  mark: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    comment: "标记",
+    defaultValue: false,
+  },
 });
 
 // Apply.sync({
