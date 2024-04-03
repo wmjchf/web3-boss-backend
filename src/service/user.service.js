@@ -7,6 +7,14 @@ class UserService {
     });
     return result.dataValues;
   }
+
+  async updateUserById(id, data) {
+    const result = await User.update(data, {
+      where: { id },
+    });
+    return result[0] > 0 ? true : false;
+  }
+
   async getUserInfo({ id, address, chainId }) {
     const whereOpt = {};
 
@@ -15,7 +23,7 @@ class UserService {
     chainId && Object.assign(whereOpt, { chainId });
 
     const result = await User.findOne({
-      attributes: ["id", "address", "chainId"],
+      attributes: ["id", "address", "chainId", "integral"],
       where: whereOpt,
     });
     return result ? result.dataValues : null;

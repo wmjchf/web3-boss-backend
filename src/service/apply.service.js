@@ -1,4 +1,5 @@
 const Apply = require("../model/apply.model");
+
 class CApplyService {
   async createApply({ jobId, resumeId, uid, resumeUrl, resumeName, haveRead }) {
     const result = await Apply.create({
@@ -9,6 +10,7 @@ class CApplyService {
       resumeName,
       haveRead,
     });
+
     return result.dataValues;
   }
 
@@ -46,8 +48,11 @@ class CApplyService {
     };
   }
 
-  async getApplyByUid(uid) {
+  async getApplyByUid(jobId, uid) {
     try {
+      const whereOpt = {};
+      uid && Object.assign(whereOpt, { uid });
+      jobId && Object.assign(whereOpt, { jobId });
       const result = await Apply.findOne({
         attributes: [
           "resumeUrl",
@@ -57,7 +62,7 @@ class CApplyService {
           "resumeId",
           "haveRead",
         ],
-        where: { uid },
+        where: whereOpt,
       });
       return result ? result.dataValues : null;
     } catch (error) {}

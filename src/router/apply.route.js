@@ -21,6 +21,6 @@ router.post("/", auth, add);
 
 router.put("/:id", auth, update);
 
-router.get("/", auth, getApplyByUid);
+router.get("/:id", auth, getApplyByUid);
 
 module.exports = router;

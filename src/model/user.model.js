@@ -17,7 +17,7 @@ const User = seq.define("user", {
   integral: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    defaultValue: 100,
+    defaultValue: 20,
     comment: "积分",
   },
 });
