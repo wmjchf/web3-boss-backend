@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 const seq = require("../db/seq");
-
+const User = require("./user.model");
 const Company = seq.define("company", {
   name: {
     type: DataTypes.STRING,
@@ -19,18 +19,14 @@ const Company = seq.define("company", {
     allowNull: false,
     comment: "描述",
   },
-  address: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    comment: "项目/团队/公司所属账号",
-  },
   location: {
     type: DataTypes.STRING,
     allowNull: false,
     comment: "办公地址",
   },
 });
-
+User.hasMany(Company);
+Company.belongsTo(User);
 // Company.sync({
 //   force: true,
 // });

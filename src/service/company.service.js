@@ -1,11 +1,11 @@
 const Company = require("../model/company.model");
 class CompanyService {
-  async createCompany({ name, logo, description, address, location }) {
+  async createCompany({ name, logo, description, userId, location }) {
     const result = await Company.create({
       name,
       logo,
       description,
-      address,
+      userId,
       location,
     });
     return result.dataValues;
@@ -35,7 +35,7 @@ class CompanyService {
   }
   async getCompanyInfo(id) {
     const result = await Company.findOne({
-      attributes: ["id", "address", "location", "description", "logo", "name"],
+      attributes: ["id", "location", "description", "logo", "name", "userId"],
       where: {
         id,
       },

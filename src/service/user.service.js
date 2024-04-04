@@ -1,3 +1,6 @@
+const Apply = require("../model/apply.model");
+const Company = require("../model/company.model");
+const Resume = require("../model/resume.model");
 const User = require("../model/user.model");
 class UserService {
   async createUser(address, chainId) {
@@ -23,6 +26,14 @@ class UserService {
     chainId && Object.assign(whereOpt, { chainId });
 
     const result = await User.findOne({
+      include: [
+        {
+          model: Resume,
+        },
+        {
+          model: Apply,
+        },
+      ],
       attributes: ["id", "address", "chainId", "integral"],
       where: whereOpt,
     });
@@ -30,6 +41,15 @@ class UserService {
   }
   async getSelfInfo({ id }) {
     const result = await User.findOne({
+      include: [
+        {
+          model: Resume,
+        },
+        {
+          model: Apply,
+        },
+        { model: Company },
+      ],
       attributes: ["id", "address", "chainId", "integral"],
       where: { id },
     });

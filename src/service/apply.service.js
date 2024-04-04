@@ -1,14 +1,12 @@
 const Apply = require("../model/apply.model");
+const Resume = require("../model/resume.model");
 
 class CApplyService {
-  async createApply({ jobId, resumeId, uid, resumeUrl, resumeName, haveRead }) {
+  async createApply({ jobId, resumeId, userId }) {
     const result = await Apply.create({
       jobId,
       resumeId,
-      uid,
-      resumeUrl,
-      resumeName,
-      haveRead,
+      userId,
     });
 
     return result.dataValues;
@@ -26,17 +24,12 @@ class CApplyService {
     const { count, rows } = await Apply.findAndCountAll({
       offset,
       limit: pageSize * 1,
-      attributes: [
-        "resumeUrl",
-        "jobId",
-        "resumeName",
-        "uid",
-        "resumeId",
-        "haveRead",
-        "mark",
-        "updatedAt",
-        "id",
+      include: [
+        {
+          model: Resume,
+        },
       ],
+      attributes: ["jobId", "userId", "haveRead", "mark", "updatedAt", "id"],
       where: whereOpt,
     });
 
@@ -48,20 +41,18 @@ class CApplyService {
     };
   }
 
-  async getApplyByUid(jobId, uid) {
+  async getApplyByUserId(jobId, userId) {
     try {
       const whereOpt = {};
-      uid && Object.assign(whereOpt, { uid });
+      userId && Object.assign(whereOpt, { userId });
       jobId && Object.assign(whereOpt, { jobId });
       const result = await Apply.findOne({
-        attributes: [
-          "resumeUrl",
-          "jobId",
-          "resumeName",
-          "uid",
-          "resumeId",
-          "haveRead",
+        include: [
+          {
+            model: Resume,
+          },
         ],
+        attributes: ["jobId", "userId", "haveRead", "mark", "updatedAt", "id"],
         where: whereOpt,
       });
       return result ? result.dataValues : null;

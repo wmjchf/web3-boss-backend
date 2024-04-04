@@ -7,11 +7,11 @@ const {
 const { addCompanyError } = require("../constant/company.error.type");
 class CompanyController {
   async get(ctx, next) {
-    const { address, id, name, pageNum = 1, pageSize = 10 } = ctx.request.query;
+    const { userId, id, name, pageNum = 1, pageSize = 10 } = ctx.request.query;
 
     try {
       const result = await getCompanyList({
-        address,
+        userId,
         id,
         name,
         pageNum,
@@ -34,7 +34,7 @@ class CompanyController {
         logo,
         description,
         location,
-        address: ctx.state.user.address,
+        userId: ctx.state.user.id,
       });
       ctx.body = {
         status: 0,
@@ -45,7 +45,7 @@ class CompanyController {
           logo: res.logo,
           location: res.location,
           description: res.description,
-          address: res.address,
+          userId: res.userId,
         },
       };
     } catch (error) {

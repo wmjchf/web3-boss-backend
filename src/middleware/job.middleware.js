@@ -13,8 +13,8 @@ const verifyCompanyId = async (ctx, next) => {
       ctx.app.emit("error", companyNotExist, ctx);
       return;
     } else {
-      const { address } = result;
-      if (address !== ctx.state.user.address) {
+      const { userId } = result;
+      if (userId !== ctx.state.user.id) {
         ctx.app.emit("error", notAuth, ctx);
         return;
       }

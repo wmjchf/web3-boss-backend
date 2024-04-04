@@ -5,7 +5,7 @@ const { auth } = require("../middleware/auth.middleware");
 const {
   get,
   add,
-  getApplyByUid,
+  getApplyByUserId,
   update,
 } = require("../controller/apply.controll");
 
@@ -21,6 +21,6 @@ router.post("/", auth, add);
 
 router.put("/:id", auth, update);
 
-router.get("/:id", auth, getApplyByUid);
+router.get("/:id", auth, getApplyByUserId);
 
 module.exports = router;

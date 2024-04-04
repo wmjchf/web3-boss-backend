@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-
+const User = require("./user.model");
 const seq = require("../db/seq");
 
 const Resume = seq.define("resume", {
@@ -13,15 +13,11 @@ const Resume = seq.define("resume", {
     allowNull: false,
     comment: "文件名字",
   },
-  uid: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    comment: "用户id",
-  },
 });
+User.hasMany(Resume);
+Resume.belongsTo(User);
 
 // Resume.sync({
 //   force: true,
 // });
-
 module.exports = Resume;

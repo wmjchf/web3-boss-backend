@@ -1,7 +1,7 @@
 const {
   getApplyList,
   createApply,
-  getApplyByUid,
+  getApplyByUserId,
   updateApplyById,
 } = require("../service/apply.service");
 const UserService = require("../service/user.service");
@@ -36,8 +36,7 @@ class CApplyController {
   }
 
   async add(ctx, next) {
-    const { jobId, resumeId, resumeUrl, resumeName, haveRead } =
-      ctx.request.body;
+    const { jobId, resumeId } = ctx.request.body;
     try {
       const { integral } = await UserService.getSelfInfo({
         id: ctx.state.user.id,
@@ -53,10 +52,7 @@ class CApplyController {
       const res = await createApply({
         jobId,
         resumeId,
-        resumeUrl,
-        resumeName,
-        haveRead,
-        uid: ctx.state.user.id,
+        userId: ctx.state.user.id,
       });
 
       ctx.body = {
@@ -64,7 +60,6 @@ class CApplyController {
         message: "申请成功",
         result: {
           id: res.id,
-          resumeUrl: res.resumeUrl,
           resetIntegral,
         },
       };
@@ -73,10 +68,10 @@ class CApplyController {
     }
   }
 
-  async getApplyByUid(ctx, next) {
+  async getApplyByUserId(ctx, next) {
     const { id } = ctx.request.params;
     try {
-      const result = await getApplyByUid(id, ctx.state.user.id);
+      const result = await getApplyByUserId(id, ctx.state.user.id);
 
       ctx.body = {
         status: 0,

@@ -15,6 +15,7 @@ class JobController {
       companyId,
       pageNum = 1,
       pageSize = 10,
+      location,
     } = ctx.request.query;
 
     try {
@@ -24,6 +25,7 @@ class JobController {
         name,
         pageNum,
         pageSize,
+        location,
       });
 
       ctx.body = {
@@ -77,15 +79,10 @@ class JobController {
     const { id } = ctx.request.params;
     try {
       const result = await getJobInfo(id);
-
-      const companyResult = await getCompanyInfo(result.companyId);
       ctx.body = {
         status: 0,
         message: "获取成功",
-        result: {
-          ...result,
-          address: companyResult.address,
-        },
+        result,
       };
     } catch (error) {}
   }

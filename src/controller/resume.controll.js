@@ -4,7 +4,7 @@ class CResumeController {
     const { pageNum = 1, pageSize = 10 } = ctx.request.query;
     try {
       const result = await getResumeList({
-        uid: ctx.state.user.id,
+        userId: ctx.state.user.id,
         pageNum,
         pageSize,
       });
@@ -21,7 +21,7 @@ class CResumeController {
     try {
       const res = await createResume({
         url,
-        uid: ctx.state.user.id,
+        userId: ctx.state.user.id,
         name,
       });
       ctx.body = {

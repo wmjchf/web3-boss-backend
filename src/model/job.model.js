@@ -2,6 +2,8 @@ const { DataTypes } = require("sequelize");
 
 const seq = require("../db/seq");
 
+const Company = require("./company.model");
+
 const Job = seq.define("job", {
   name: {
     type: DataTypes.STRING,
@@ -40,11 +42,6 @@ const Job = seq.define("job", {
     allowNull: false,
     comment: "标签",
   },
-  companyId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    comment: "项目/团队/公司id",
-  },
   isDelete: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
@@ -53,6 +50,8 @@ const Job = seq.define("job", {
   },
 });
 
+Company.hasOne(Job);
+Job.belongsTo(Company);
 // Job.sync({
 //   force: true,
 // });

@@ -1,3 +1,4 @@
+const Company = require("../model/company.model");
 const Job = require("../model/job.model");
 class JobService {
   async createJob({
@@ -36,23 +37,29 @@ class JobService {
     pageNum,
     pageSize,
     isDelete = false,
+    location,
   }) {
     const whereOpt = {};
 
     isRemote && Object.assign(whereOpt, { isRemote });
     name && Object.assign(whereOpt, { name });
     companyId && Object.assign(whereOpt, { companyId });
+    location && Object.assign(whereOpt, { location });
     Object.assign(whereOpt, { isDelete });
     const offset = (pageNum - 1) * pageSize;
 
     const { count, rows } = await Job.findAndCountAll({
       offset,
       limit: pageSize * 1,
+      include: [
+        {
+          model: Company,
+        },
+      ],
       attributes: [
         "name",
         "id",
         "isRemote",
-        "companyId",
         "maxSalary",
         "minSalary",
         "isFace",
@@ -73,11 +80,15 @@ class JobService {
   }
   async getJobInfo(id) {
     const result = await Job.findOne({
+      include: [
+        {
+          model: Company,
+        },
+      ],
       attributes: [
         "name",
         "id",
         "isRemote",
-        "companyId",
         "maxSalary",
         "minSalary",
         "tag",
