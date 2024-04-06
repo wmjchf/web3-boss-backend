@@ -38,17 +38,17 @@ class CApplyController {
   async add(ctx, next) {
     const { jobId, resumeId } = ctx.request.body;
     try {
-      const { integral } = await UserService.getSelfInfo({
-        id: ctx.state.user.id,
-      });
-      const resetIntegral = integral - INTEGRAL;
-      if (resetIntegral < 0) {
-        ctx.app.emit("error", applyNotEnough, ctx);
-        return;
-      }
-      await UserService.updateUserById(ctx.state.user.id, {
-        integral: resetIntegral,
-      });
+      // const { integral } = await UserService.getSelfInfo({
+      //   id: ctx.state.user.id,
+      // });
+      // const resetIntegral = integral - INTEGRAL;
+      // if (resetIntegral < 0) {
+      //   ctx.app.emit("error", applyNotEnough, ctx);
+      //   return;
+      // }
+      // await UserService.updateUserById(ctx.state.user.id, {
+      //   integral: resetIntegral,
+      // });
       const res = await createApply({
         jobId,
         resumeId,
@@ -60,7 +60,7 @@ class CApplyController {
         message: "申请成功",
         result: {
           id: res.id,
-          resetIntegral,
+          resetIntegral: ctx.resetIntegral,
         },
       };
     } catch (error) {
@@ -69,9 +69,14 @@ class CApplyController {
   }
 
   async getApplyByUserId(ctx, next) {
-    const { id } = ctx.request.params;
+    const { pageNum = 1, pageSize = 10, jobId } = ctx.request.query;
     try {
-      const result = await getApplyByUserId(id, ctx.state.user.id);
+      const result = await getApplyByUserId({
+        jobId,
+        userId: ctx.state.user.id,
+        pageNum,
+        pageSize,
+      });
 
       ctx.body = {
         status: 0,

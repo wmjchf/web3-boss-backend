@@ -1,4 +1,6 @@
 const Apply = require("../model/apply.model");
+const Company = require("../model/company.model");
+const Job = require("../model/job.model");
 const Resume = require("../model/resume.model");
 
 class CApplyService {
@@ -41,21 +43,37 @@ class CApplyService {
     };
   }
 
-  async getApplyByUserId(jobId, userId) {
+  async getApplyByUserId({ userId, pageNum, pageSize, jobId }) {
     try {
       const whereOpt = {};
       userId && Object.assign(whereOpt, { userId });
       jobId && Object.assign(whereOpt, { jobId });
-      const result = await Apply.findOne({
+      const offset = (pageNum - 1) * pageSize;
+      const { count, rows } = await Apply.findAndCountAll({
         include: [
           {
             model: Resume,
           },
+          {
+            model: Job,
+            include: [
+              {
+                model: Company,
+              },
+            ],
+          },
         ],
+        offset,
+        limit: pageSize * 1,
         attributes: ["jobId", "userId", "haveRead", "mark", "updatedAt", "id"],
         where: whereOpt,
       });
-      return result ? result.dataValues : null;
+      return {
+        total: count,
+        pageNum,
+        pageSize,
+        list: rows,
+      };
     } catch (error) {}
   }
 

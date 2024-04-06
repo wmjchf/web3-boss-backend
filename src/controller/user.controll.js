@@ -4,9 +4,10 @@ const {
   createUser,
   getUserInfo,
   getSelfInfo,
+  updateUserById,
 } = require("../service/user.service");
 const { userLoginError, userNonceError } = require("../constant/error.type");
-const { JWT_SECRET } = require("../config/config.default");
+const { JWT_SECRET, ADD_INTEGRAL } = require("../config/config.default");
 class UserControll {
   async register(ctx, next) {
     const { username, password } = ctx.request.body;
@@ -29,11 +30,18 @@ class UserControll {
   }
   async login(ctx, next) {
     const { siwe } = ctx;
+    const { share } = ctx.request.body;
     const { address, chainId } = siwe;
     let result = await getUserInfo({ address });
+    const shareUser = await getUserInfo({ address: share });
     try {
       if (!result) {
         result = await createUser(address, chainId);
+        if (shareUser) {
+          await updateUserById(shareUser.id, {
+            integral: shareUser.integral + parseInt(ADD_INTEGRAL),
+          });
+        }
       }
       ctx.body = {
         code: 0,

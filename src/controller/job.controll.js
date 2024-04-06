@@ -70,6 +70,7 @@ class JobController {
           location: res.location,
           description: res.description,
           address: res.address,
+          resetIntegral: ctx.resetIntegral,
         },
       };
     } catch (error) {}

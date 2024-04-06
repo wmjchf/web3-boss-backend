@@ -1,6 +1,7 @@
 const Router = require("koa-router");
 
 const { auth } = require("../middleware/auth.middleware");
+const { useIntergral } = require("../middleware/integral.middleware");
 
 const {
   get,
@@ -17,10 +18,12 @@ const router = new Router({
 
 router.get("/list", auth, get);
 
-router.post("/", auth, add);
+router.post("/", auth, useIntergral, add);
 
 router.put("/:id", auth, update);
 
-router.get("/:id", auth, getApplyByUserId);
+// router.get("/:id", auth, getApplyByUserId);
+
+router.get("/", auth, getApplyByUserId);
 
 module.exports = router;

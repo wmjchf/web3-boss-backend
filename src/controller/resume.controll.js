@@ -1,4 +1,8 @@
-const { getResumeList, createResume } = require("../service/resume.service");
+const {
+  getResumeList,
+  createResume,
+  updateResumeById,
+} = require("../service/resume.service");
 class CResumeController {
   async get(ctx, next) {
     const { pageNum = 1, pageSize = 10 } = ctx.request.query;
@@ -31,6 +35,18 @@ class CResumeController {
           id: res.id,
           url: res.url,
         },
+      };
+    } catch (error) {}
+  }
+
+  async delete(ctx, next) {
+    const { id } = ctx.request.params;
+    try {
+      const result = await updateResumeById(id, { isDelete: true });
+      ctx.body = {
+        status: 0,
+        message: "删除成功",
+        result,
       };
     } catch (error) {}
   }

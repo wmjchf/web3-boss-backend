@@ -30,6 +30,13 @@ class CResumeService {
       list: rows,
     };
   }
+
+  async updateResumeById(id, data) {
+    const result = await Resume.update(data, {
+      where: { id },
+    });
+    return result[0] > 0 ? true : false;
+  }
 }
 
 module.exports = new CResumeService();

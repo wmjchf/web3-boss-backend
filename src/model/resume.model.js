@@ -13,6 +13,12 @@ const Resume = seq.define("resume", {
     allowNull: false,
     comment: "文件名字",
   },
+  isDelete: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    comment: "是否删除",
+    defaultValue: false,
+  },
 });
 User.hasMany(Resume);
 Resume.belongsTo(User);
