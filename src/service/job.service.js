@@ -1,5 +1,9 @@
 const Company = require("../model/company.model");
 const Job = require("../model/job.model");
+
+const seq = require("sequelize");
+const Op = seq.Op;
+
 class JobService {
   async createJob({
     name,
@@ -41,10 +45,11 @@ class JobService {
   }) {
     const whereOpt = {};
 
-    isRemote && Object.assign(whereOpt, { isRemote });
-    name && Object.assign(whereOpt, { name });
+    isRemote && Object.assign(whereOpt, { isRemote: 1 });
+    name && Object.assign(whereOpt, { name: { [Op.like]: `%${name}%` } });
     companyId && Object.assign(whereOpt, { companyId });
-    location && Object.assign(whereOpt, { location });
+    location &&
+      Object.assign(whereOpt, { location: { [Op.like]: `%${location}%` } });
     Object.assign(whereOpt, { isDelete });
     const offset = (pageNum - 1) * pageSize;
 

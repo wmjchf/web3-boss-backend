@@ -62,7 +62,7 @@ class JobController {
       });
       ctx.body = {
         status: 0,
-        message: "添加项目/团队/公司成功",
+        message: "发布岗位成功",
         result: {
           id: res.id,
           name: res.name,

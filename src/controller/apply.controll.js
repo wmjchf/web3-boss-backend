@@ -57,7 +57,7 @@ class CApplyController {
 
       ctx.body = {
         status: 0,
-        message: "申请成功",
+        message: "投递成功",
         result: {
           id: res.id,
           resetIntegral: ctx.resetIntegral,
