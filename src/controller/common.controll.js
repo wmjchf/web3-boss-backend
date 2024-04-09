@@ -12,7 +12,7 @@ const client = new OSS({
   region: "oss-cn-hangzhou", // 示例：'oss-cn-hangzhou'，填写Bucket所在地域。
   accessKeyId: OSS_ACCESS_KEY_ID, // 确保已设置环境变量OSS_ACCESS_KEY_ID。
   accessKeySecret: OSS_ACCESS_KEY_SECRET, // 确保已设置环境变量OSS_ACCESS_KEY_SECRET。
-  bucket: "web3-boss-image", // 示例：'my-bucket-name'，填写存储空间名称。
+  bucket: "flowin3", // 示例：'my-bucket-name'，填写存储空间名称。
 });
 
 class CommonControll {

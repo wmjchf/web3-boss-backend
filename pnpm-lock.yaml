@@ -23,6 +23,9 @@ dependencies:
   koa-body:
     specifier: ^6.0.1
     version: 6.0.1
+  koa-connect-history-api-fallback:
+    specifier: ^0.3.1
+    version: 0.3.1
   koa-parameter:
     specifier: ^3.0.1
     version: 3.0.1
@@ -32,6 +35,9 @@ dependencies:
   koa-session:
     specifier: ^6.4.0
     version: 6.4.0
+  koa-sslify:
+    specifier: ^5.0.1
+    version: 5.0.1
   koa-static:
     specifier: ^5.0.0
     version: 5.0.0
@@ -442,6 +448,11 @@ packages:
   /concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
     dev: true
+
+  /connect-history-api-fallback@1.6.0:
+    resolution: {integrity: sha512-e54B99q/OUoH64zYYRf3HBP5z24G38h5D3qXu23JGRoigpX5Ss4r9ZnDk3g0Z8uQC2x2lPaJ+UlWBc1ZWBWdLg==}
+    engines: {node: '>=0.8'}
+    dev: false
 
   /content-disposition@0.5.4:
     resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==}
@@ -970,6 +981,12 @@ packages:
     resolution: {integrity: sha512-8ODW8TrDuMYvXRwra/Kh7/rJo9BtOfPc6qO8eAfC80CnCvSjSl0bkRM24X6/XBBEyj0v1nRUQ1LyOy3dbqOWXw==}
     dev: false
 
+  /koa-connect-history-api-fallback@0.3.1:
+    resolution: {integrity: sha512-LcUaGeRQLWGyrbYRZ6r0CrIz0ItHhOTrHuJj6iVN+op9jdVZrbYj9GIU8uCZoXJbsqjxuugc9/xP9sqeopMbGA==}
+    dependencies:
+      connect-history-api-fallback: 1.6.0
+    dev: false
+
   /koa-convert@2.0.0:
     resolution: {integrity: sha512-asOvN6bFlSnxewce2e/DK3p4tltyfC4VM7ZwuTuepI7dEQVcvpyFuBcEARu1+Hxg8DIwytce2n7jrZtRlPrARA==}
     engines: {node: '>= 10'}
@@ -1018,6 +1035,11 @@ packages:
       uuid: 8.3.2
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /koa-sslify@5.0.1:
+    resolution: {integrity: sha512-QwQgMvNPyePpngghYZxeuPzeQqMOFYUXiKu8pd4wz9rd7ZmoOq4VKtoEIjctLt3Qcfv2aHL/0UIRAmIK4qDczg==}
+    engines: {node: '>6.0.0'}
     dev: false
 
   /koa-static@5.0.0:
