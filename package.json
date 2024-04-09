@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./src/main.js",
-    "start": "node ./src/main.js"
+    "dev": "dotenv -e .env.development nodemon ./src/main.js",
+    "prod": "dotenv -e .env.production pm2 start ./src/main.js"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "jsonwebtoken": "^9.0.2",
     "koa": "^2.15.2",
     "koa-body": "^6.0.1",
+    "koa-compress": "^5.1.1",
     "koa-connect-history-api-fallback": "^0.3.1",
     "koa-parameter": "^3.0.1",
     "koa-router": "^12.0.1",

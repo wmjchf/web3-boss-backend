@@ -1,10 +1,18 @@
+// const app = require("./app");
+// const { APP_PORT } = require("./config/config.default");
+
+// app.listen(APP_PORT, () => {
+//   console.log(`server is runnint on http://localhost:${APP_PORT}`);
+// });
 const app = require("./app");
 const { APP_PORT } = require("./config/config.default");
 
 // app.listen(APP_PORT, () => {
 //   console.log(`server is runnint on http://localhost:${APP_PORT}`);
 // });
-const https = require("https");
+// const https = require("https");
+const http2 = require("http2");
+
 const fs = require("fs");
 const path = require("path");
 /**
@@ -16,7 +24,7 @@ const options = {
   cert: fs.readFileSync(path.join(__dirname, "./ssl/www.flowin3.com.pem")),
 };
 // var server = http.createServer(app.callback());
-var httpsServer = https.createServer(options, app.callback());
+var httpsServer = http2.createSecureServer(options, app.callback());
 
 httpsServer.listen(APP_PORT, (err) => {
   if (err) {

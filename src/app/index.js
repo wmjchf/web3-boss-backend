@@ -1,6 +1,7 @@
 const path = require("path");
 const Koa = require("koa");
 const KoaStatic = require("koa-static");
+const compress = require("koa-compress");
 const history = require("koa-connect-history-api-fallback");
 const { koaBody } = require("koa-body");
 const sslify = require("koa-sslify").default;
@@ -11,17 +12,24 @@ const router = require("../router");
 const errorHandler = require("./errorHandler");
 const app = new Koa();
 
-// app.use(
-//   cors({
-//     origin: function (ctx) {
-//       return ORIGIN;
-//     },
-//   })
-// );
+const options = { threshold: 2048 };
+app.use(compress(options));
+
+app.use(
+  cors({
+    origin: function (ctx) {
+      return ORIGIN;
+    },
+  })
+);
 // 使用 ssl
 app.use(sslify());
 app.use(history());
-app.use(KoaStatic(path.join(__dirname, "../static")));
+app.use(
+  KoaStatic(path.join(__dirname, "../static"), {
+    maxage: 2592000000,
+  })
+);
 
 app.use(parameter(app));
 app.use(
