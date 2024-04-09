@@ -23,7 +23,7 @@ app.use(
   })
 );
 // 使用 ssl
-app.use(sslify());
+// app.use(sslify());
 app.use(history());
 app.use(
   KoaStatic(path.join(__dirname, "../static"), {

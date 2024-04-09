@@ -10,8 +10,8 @@ const router = new Router({
 
 router.post("/upload", auth, upload);
 
-router.get("/preview", auth, previewUrl);
+// router.get("/preview", auth, previewUrl);
 
-router.get("/preview/normal", previewUrl);
+// router.get("/preview/normal", previewUrl);
 
 module.exports = router;
