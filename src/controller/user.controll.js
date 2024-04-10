@@ -33,13 +33,20 @@ class UserControll {
     const { share } = ctx.request.body;
     const { address, chainId } = siwe;
     let result = await getUserInfo({ address });
-    const shareUser = await getUserInfo({ address: share });
+
+    const shareUser0 = await getUserInfo({ address: share[0] });
+    const shareUser1 = await getUserInfo({ address: share[1] });
     try {
       if (!result) {
         result = await createUser(address, chainId);
-        if (shareUser) {
-          await updateUserById(shareUser.id, {
-            integral: shareUser.integral + parseInt(ADD_INTEGRAL),
+        if (shareUser0) {
+          await updateUserById(shareUser0.id, {
+            integral: shareUser0.integral + parseInt(ADD_INTEGRAL),
+          });
+        }
+        if (shareUser1) {
+          await updateUserById(shareUser1.id, {
+            integral: shareUser1.integral + parseInt(ADD_INTEGRAL),
           });
         }
       }

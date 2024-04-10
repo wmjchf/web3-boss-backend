@@ -2,6 +2,7 @@ const Company = require("../model/company.model");
 const Job = require("../model/job.model");
 
 const seq = require("sequelize");
+const User = require("../model/user.model");
 const Op = seq.Op;
 
 class JobService {
@@ -89,6 +90,11 @@ class JobService {
       include: [
         {
           model: Company,
+          include: [
+            {
+              model: User,
+            },
+          ],
         },
       ],
       attributes: [
