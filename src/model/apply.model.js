@@ -40,6 +40,12 @@ const Apply = seq.define("apply", {
     comment: "简历是否已被读",
     defaultValue: false,
   },
+  isDownload: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    comment: "简历是否已被下载",
+    defaultValue: false,
+  },
   mark: {
     type: DataTypes.BOOLEAN,
     allowNull: false,

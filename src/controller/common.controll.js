@@ -38,6 +38,19 @@ class CommonControll {
       ctx.app.emit("error", fileUploadError, ctx);
     }
   }
+  async download(ctx, next) {
+    try {
+      const { url } = ctx.request.body;
+      const result = await client.signatureUrl(url);
+      ctx.body = {
+        code: 0,
+        message: "文件签名成功",
+        result,
+      };
+    } catch (error) {
+      console.log(error, "fds");
+    }
+  }
 }
 
 module.exports = new CommonControll();

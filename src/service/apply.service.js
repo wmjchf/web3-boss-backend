@@ -26,12 +26,21 @@ class CApplyService {
     const { count, rows } = await Apply.findAndCountAll({
       offset,
       limit: pageSize * 1,
+      order: [["updatedAt", "DESC"]],
       include: [
         {
           model: Resume,
         },
       ],
-      attributes: ["jobId", "userId", "haveRead", "mark", "updatedAt", "id"],
+      attributes: [
+        "jobId",
+        "userId",
+        "haveRead",
+        "mark",
+        "updatedAt",
+        "id",
+        "isDownload",
+      ],
       where: whereOpt,
     });
 
@@ -65,7 +74,15 @@ class CApplyService {
         ],
         offset,
         limit: pageSize * 1,
-        attributes: ["jobId", "userId", "haveRead", "mark", "updatedAt", "id"],
+        attributes: [
+          "jobId",
+          "userId",
+          "haveRead",
+          "mark",
+          "updatedAt",
+          "id",
+          "isDownload",
+        ],
         where: whereOpt,
       });
       return {

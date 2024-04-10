@@ -56,6 +56,7 @@ class JobService {
     const { count, rows } = await Job.findAndCountAll({
       offset,
       limit: pageSize * 1,
+      order: [["updatedAt", "DESC"]],
       include: [
         {
           model: Company,
