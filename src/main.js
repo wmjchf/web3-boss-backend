@@ -26,7 +26,6 @@ if (ENV === "production" && APP_PORT === "443") {
     }
   });
 } else {
-  console.log("dfsfs");
   app.listen(APP_PORT, () => {
     console.log(`server is runnint on http://localhost:${APP_PORT}`);
   });
