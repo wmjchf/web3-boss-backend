@@ -47,6 +47,7 @@ class JobController {
       maxSalary,
       isFace,
       location,
+      contact,
     } = ctx.request.body;
     try {
       const res = await createJob({
@@ -59,6 +60,7 @@ class JobController {
         maxSalary,
         isFace,
         location,
+        contact,
       });
       ctx.body = {
         status: 0,

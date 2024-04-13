@@ -16,6 +16,7 @@ class JobService {
     maxSalary,
     isFace,
     location,
+    contact,
   }) {
     try {
       const result = await Job.create({
@@ -28,6 +29,7 @@ class JobService {
         isFace,
         location,
         tag,
+        contact,
       });
       return result.dataValues;
     } catch (error) {

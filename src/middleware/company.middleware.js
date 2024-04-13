@@ -34,7 +34,7 @@ const isOwner = async (ctx, next) => {
   try {
     const { id } = ctx.request.params;
     const result = await getCompanyInfo(id);
-    if (result.address !== ctx.state.user.address) {
+    if (result.user.dataValues.address !== ctx.state.user.address) {
       ctx.app.emit("error", updateCompanyError, ctx);
       return;
     }

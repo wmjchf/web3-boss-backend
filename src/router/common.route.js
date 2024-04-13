@@ -11,6 +11,10 @@ const router = new Router({
 
 router.post("/upload", auth, upload);
 
+router.post("/upload1", (ctx) => {
+  console.log(ctx.request.files, "vvv");
+});
+
 router.post("/download", auth, useIntergral, download);
 
 // router.get("/preview", auth, previewUrl);

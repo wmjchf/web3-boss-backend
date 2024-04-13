@@ -15,6 +15,7 @@ class CApplyController {
       jobId,
       haveRead,
       mark,
+      isDownload,
     } = ctx.request.query;
     try {
       const result = await getApplyList({
@@ -23,6 +24,7 @@ class CApplyController {
         pageSize,
         haveRead,
         mark,
+        isDownload,
       });
 
       ctx.body = {
@@ -70,6 +72,7 @@ class CApplyController {
 
   async getApplyByUserId(ctx, next) {
     const { pageNum = 1, pageSize = 10, jobId } = ctx.request.query;
+
     try {
       const result = await getApplyByUserId({
         jobId,

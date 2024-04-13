@@ -1,4 +1,5 @@
 const Company = require("../model/company.model");
+const User = require("../model/user.model");
 class CompanyService {
   async createCompany({ name, logo, description, userId, location }) {
     const result = await Company.create({
@@ -35,6 +36,11 @@ class CompanyService {
   }
   async getCompanyInfo(id) {
     const result = await Company.findOne({
+      include: [
+        {
+          model: User,
+        },
+      ],
       attributes: ["id", "location", "description", "logo", "name", "userId"],
       where: {
         id,

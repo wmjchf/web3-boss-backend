@@ -48,6 +48,10 @@ const Job = seq.define("job", {
     comment: "是否删除",
     defaultValue: false,
   },
+  contact: {
+    type: DataTypes.STRING,
+    comment: "联系方式，非必填",
+  },
 });
 
 Company.hasOne(Job);
