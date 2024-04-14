@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 const User = require("./user.model");
 const Job = require("./job.model");
 const Resume = require("./resume.model");
+const Apply = require("./apply.model");
 const seq = require("../db/seq");
 
 const Integral = seq.define("integral1", {
@@ -29,13 +30,15 @@ const Integral = seq.define("integral1", {
 });
 User.hasMany(Integral);
 Integral.belongsTo(User);
-User.hasOne(Integral, {
+User.hasMany(Integral, {
   foreignKey: "fromId",
   sourceKey: "id",
 });
 Integral.belongsTo(User);
-Resume.hasOne(Integral);
+Resume.hasMany(Integral);
 Integral.belongsTo(Resume);
+Apply.hasOne(Integral);
+Integral.belongsTo(Apply);
 Job.hasMany(Integral);
 Integral.belongsTo(Job);
 // Integral.sync({

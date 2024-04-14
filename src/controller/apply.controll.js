@@ -65,9 +65,11 @@ class CApplyController {
           resetIntegral: ctx.resetIntegral,
         },
       };
+      ctx.applyId = res.id;
     } catch (error) {
       console.log(error, "fs");
     }
+    await next();
   }
 
   async getApplyByUserId(ctx, next) {

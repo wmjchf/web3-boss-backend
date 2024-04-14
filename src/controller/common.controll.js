@@ -50,6 +50,7 @@ class CommonControll {
     } catch (error) {
       console.log(error, "fds");
     }
+    await next();
   }
 }
 

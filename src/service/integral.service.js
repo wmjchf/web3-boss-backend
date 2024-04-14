@@ -3,7 +3,16 @@ const Job = require("../model/job.model");
 const User = require("../model/user.model");
 
 class IntegralService {
-  async create({ userId, fromId, jobId, count, tool, type, resumeId }) {
+  async create({
+    userId,
+    fromId,
+    jobId,
+    count,
+    tool,
+    type,
+    resumeId,
+    applyId,
+  }) {
     try {
       const result = await Integral.create({
         userId,
@@ -13,6 +22,7 @@ class IntegralService {
         tool,
         type,
         resumeId,
+        applyId,
       });
       return result.dataValues;
     } catch (error) {

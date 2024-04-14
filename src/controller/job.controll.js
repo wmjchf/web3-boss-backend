@@ -75,7 +75,9 @@ class JobController {
           resetIntegral: ctx.resetIntegral,
         },
       };
+      ctx.jobId = res.id;
     } catch (error) {}
+    await next();
   }
 
   async getById(ctx, next) {
