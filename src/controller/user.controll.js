@@ -1,13 +1,8 @@
 const { generateNonce } = require("siwe");
 const jwt = require("jsonwebtoken");
-const {
-  createUser,
-  getUserInfo,
-  getSelfInfo,
-  updateUserById,
-} = require("../service/user.service");
+const { createUser, getSelfInfo } = require("../service/user.service");
 const { userLoginError, userNonceError } = require("../constant/error.type");
-const { JWT_SECRET, ADD_INTEGRAL } = require("../config/config.default");
+const { JWT_SECRET } = require("../config/config.default");
 class UserControll {
   async register(ctx, next) {
     const { username, password } = ctx.request.body;
@@ -29,33 +24,18 @@ class UserControll {
     }
   }
   async login(ctx, next) {
-    const { siwe } = ctx;
-    const { share } = ctx.request.body;
-    const { address, chainId } = siwe;
-    let result = await getUserInfo({ address });
-
-    const shareUser0 = await getUserInfo({ address: share[0] });
-    const shareUser1 = await getUserInfo({ address: share[1] });
+    const { userInfo } = ctx;
     try {
-      if (!result) {
-        result = await createUser(address, chainId);
-        if (shareUser0) {
-          await updateUserById(shareUser0.id, {
-            integral: shareUser0.integral + parseInt(ADD_INTEGRAL),
-          });
-        }
-        if (shareUser1) {
-          await updateUserById(shareUser1.id, {
-            integral: shareUser1.integral + parseInt(ADD_INTEGRAL),
-          });
-        }
-      }
       ctx.body = {
         code: 0,
         message: "登录成功",
         result: {
           token: jwt.sign(
-            { address: result.address, chainId: result.chainId, id: result.id },
+            {
+              address: userInfo.address,
+              chainId: userInfo.chainId,
+              id: userInfo.id,
+            },
             JWT_SECRET,
             {
               expiresIn: "1d",

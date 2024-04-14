@@ -1,9 +1,10 @@
 const { DataTypes } = require("sequelize");
 const User = require("./user.model");
 const Job = require("./job.model");
+const Resume = require("./resume.model");
 const seq = require("../db/seq");
 
-const Integral = seq.define("integral", {
+const Integral = seq.define("integral1", {
   type: {
     type: DataTypes.TINYINT,
     allowNull: false,
@@ -33,6 +34,8 @@ User.hasOne(Integral, {
   sourceKey: "id",
 });
 Integral.belongsTo(User);
+Resume.hasOne(Integral);
+Integral.belongsTo(Resume);
 Job.hasMany(Integral);
 Integral.belongsTo(Job);
 // Integral.sync({

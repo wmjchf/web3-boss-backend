@@ -1,8 +1,11 @@
 const UserService = require("../service/user.service");
 const IntegralService = require("../service/integral.service");
+const { integralTool } = require("../constant/integral.tool");
 const { INTEGRAL } = require("../config/config.default");
 const { applyNotEnough } = require("../constant/apply.error.type");
 const useIntergral = async (ctx, next) => {
+  const url = ctx.request.url;
+  const { jobId, resumeId } = ctx.request.body;
   try {
     const { integral } = await UserService.getSelfInfo({
       id: ctx.state.user.id,
@@ -18,6 +21,10 @@ const useIntergral = async (ctx, next) => {
     await IntegralService.create({
       userId: ctx.state.user.id,
       count: INTEGRAL,
+      type: 0,
+      tool: integralTool[url],
+      jobId,
+      resumeId,
     });
     ctx.resetIntegral = resetIntegral;
   } catch (error) {
