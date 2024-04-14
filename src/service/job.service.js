@@ -109,6 +109,7 @@ class JobService {
         "description",
         "isFace",
         "location",
+        "contact",
       ],
       where: {
         id,
