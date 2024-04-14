@@ -1,4 +1,5 @@
 const UserService = require("../service/user.service");
+const IntegralService = require("../service/integral.service");
 const { INTEGRAL } = require("../config/config.default");
 const { applyNotEnough } = require("../constant/apply.error.type");
 const useIntergral = async (ctx, next) => {
@@ -13,6 +14,10 @@ const useIntergral = async (ctx, next) => {
     }
     await UserService.updateUserById(ctx.state.user.id, {
       integral: resetIntegral,
+    });
+    await IntegralService.create({
+      userId: ctx.state.user.id,
+      count: INTEGRAL,
     });
     ctx.resetIntegral = resetIntegral;
   } catch (error) {
