@@ -15,7 +15,6 @@ if (ENV === "production" && APP_PORT === "443") {
     key: fs.readFileSync(path.join(__dirname, "./ssl/www.flowin3.com.key")),
     cert: fs.readFileSync(path.join(__dirname, "./ssl/www.flowin3.com.pem")),
   };
-  // var server = http.createServer(app.callback());
   var httpsServer = https.createServer(options, app.callback());
 
   httpsServer.listen(APP_PORT, (err) => {

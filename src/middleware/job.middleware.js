@@ -20,6 +20,7 @@ const verifyCompanyId = async (ctx, next) => {
       }
     }
   } catch (error) {
+    console.log(error, "fsdfs");
     ctx.app.emit("error", addJobError, ctx);
     return;
   }

@@ -3,7 +3,6 @@ const { WX_APPID } = require("../config/config.default");
 class WXController {
   async get(ctx, next) {
     const noncestr = Math.random().toString().split(".")[1];
-    console.log(ctx.query.url);
     const timestamp = Date.now();
     const signatureArr = [
       `noncestr=${noncestr}`,

@@ -41,7 +41,6 @@ const getTicket = async (ctx, next) => {
       const { body, statusCode } = await request(url);
       if (statusCode === 200) {
         const response = await body.json();
-        console.log(response, "ffdsfdfs");
         const ticket = response.ticket;
         ctx.ticket = ticket;
         fs.writeFileSync(path.join(__dirname, "../wx/ticket.txt"), ticket);

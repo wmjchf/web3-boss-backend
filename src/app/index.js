@@ -27,11 +27,7 @@ if (ENV === "production" && APP_PORT === "443") {
 }
 
 app.use(history());
-app.use(
-  KoaStatic(path.join(__dirname, "../static"), {
-    maxage: 2592000000,
-  })
-);
+app.use(KoaStatic(path.join(__dirname, "../static")));
 
 app.use(parameter(app));
 app.use(

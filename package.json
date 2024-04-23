@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "dotenv -e .env.development nodemon ./src/main.js",
+    "local-prod": "dotenv -e .env.production nodemon ./src/main.js",
     "prod": "dotenv -e .env.production pm2 start ./src/main.js"
   },
   "keywords": [],

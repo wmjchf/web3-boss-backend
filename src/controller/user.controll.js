@@ -68,11 +68,23 @@ class UserControll {
     const { id } = ctx.state.user;
     try {
       const result = await getSelfInfo({ id });
-      ctx.body = {
-        status: 0,
-        message: "获取成功",
-        result,
-      };
+      if (result) {
+        ctx.body = {
+          status: 0,
+          message: "获取成功",
+          result,
+        };
+      } else {
+        ctx.app.emit(
+          "error",
+          {
+            code: "10006",
+            message: "用户不存在",
+            result: "",
+          },
+          ctx
+        );
+      }
     } catch (error) {}
   }
 }

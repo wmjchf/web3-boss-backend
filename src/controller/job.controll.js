@@ -101,7 +101,9 @@ class JobController {
         message: "修改成功",
         result,
       };
-    } catch (error) {}
+    } catch (error) {
+      console.log(error, "dfs");
+    }
   }
   async delete(ctx, next) {
     const { id } = ctx.request.params;
